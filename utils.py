@@ -28,7 +28,7 @@ def plot_fig(kind:str, algo:str, save_fig:bool=False) -> None:
         plt.title(f'{algo} - Episode Rewards')
         plt.xlabel('Reward')
         plt.plot(rewards_t.numpy(), label='Score')
-        if len(rewards_t) >= 100:
+        if num_episodes >= 100:
             means = rewards_t.unfold(0, 100, 1).mean(1).view(-1)
             means = torch.cat((torch.zeros(99), means))
             plt.plot(means.numpy(), label='Last 100 Mean')
