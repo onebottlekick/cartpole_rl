@@ -26,7 +26,8 @@ def plot_fig(kind:str, algo:str, save_fig:bool=False) -> None:
         rewards_t = torch.tensor(target, dtype=torch.float)
         num_episodes = len(rewards_t)
         plt.title(f'{algo} - Episode Rewards')
-        plt.xlabel('Reward')
+        plt.xlabel('Episode')
+        plt.ylabel('Reward')
         plt.plot(rewards_t.numpy(), label='Score')
         if num_episodes >= 100:
             means = rewards_t.unfold(0, 100, 1).mean(1).view(-1)
