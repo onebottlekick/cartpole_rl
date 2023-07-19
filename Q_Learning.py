@@ -73,8 +73,8 @@ for episode in range(NUM_EPISODES):
             new_q = curr_q + ALPHA*(reward + GAMMA*max_future_q - curr_q)
             Q_TABLE[curr_discrete_observation + (action, )] = new_q
             
-            save_scalars('cart_positions', 'Q_Learing', cart_positions)
-            save_scalars('pole_angles', 'Q_Learing', pole_angles)
+            save_scalars('cart_positions', 'Q_Learning', cart_positions)
+            save_scalars('pole_angles', 'Q_Learning', pole_angles)
 
         curr_discrete_observation = new_discrete_observation
         action = new_action
@@ -82,4 +82,4 @@ for episode in range(NUM_EPISODES):
         episode_reward += reward
     
     episode_rewards.append(episode_reward)
-    save_scalars('episode_rewards', 'Q_Learing', episode_rewards, save_every=1)
+    save_scalars('episode_rewards', 'Q_Learning', episode_rewards, save_every=1)
