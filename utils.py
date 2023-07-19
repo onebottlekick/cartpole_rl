@@ -14,13 +14,26 @@ def save_scalars(kind:str, algo:str, target:list, save_every:int=3000) -> None:
     with open(f'scalars/{kind}/{algo}/final.pkl', 'wb') as f:
         pickle.dump(target, f)
         
+
+def smooth(scalars:list, weight:float) -> list:
+    last = scalars[0]
+    smoothed = []
+    for scalar in scalars:
+        smoothed_val = last*weight + (1 - weight)*scalar
+        smoothed.append(smoothed_val)
+        last = smoothed_val
+    return smoothed
         
-def plot_fig(kind:str, algo:str, save_fig:bool=False) -> None:
+        
+def plot_fig(kind:str, algo:str, save_fig:bool=False, smoothing_weight:int=0) -> None:
     scalar_path = f'scalars/{kind}/{algo}'
     save_path = 'results'
     os.makedirs(save_path, exist_ok=True)
     with open(f'{scalar_path}/final.pkl', 'rb') as f:
         target = pickle.load(f)
+    
+    if smoothing_weight > 0:
+        target = smooth(target, smoothing_weight)
         
     if kind == 'episode_rewards':
         rewards_t = torch.tensor(target, dtype=torch.float)
