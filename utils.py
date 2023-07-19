@@ -33,10 +33,16 @@ def plot_fig(kind:str, algo:str, save_fig:bool=False) -> None:
             means = torch.cat((torch.zeros(99), means))
             plt.plot(means.numpy(), label='Last 100 Mean')
         plt.legend(loc='upper left')
-    else:
+    elif kind == 'cart_positions':
         plt.plot(target)
         plt.xlabel('Steps')
         plt.ylabel('Cart Position')
+    elif kind == 'pole_angles':
+        plt.plot(target)
+        plt.xlabel('Steps')
+        plt.ylabel('Pole Angle')
+        
     if save_fig:
         plt.savefig(f'{save_path}/{kind}_{algo}.png')
+        
     plt.show()
