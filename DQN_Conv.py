@@ -28,7 +28,7 @@ EPS_DECAY = config['EPS_DECAY']
 TARGET_UPDATE = config['TARGET_UPDATE']
 MEMORY_SIZE = config['MEMORY_SIZE']
 END_SCORE = config['END_SCORE']
-TRANING_STOP = config['TRAINING_STOP']
+TRAINING_STOP = config['TRAINING_STOP']
 NUM_EPISODES = config['NUM_EPISODES']
 LAST_EPISODES_NUM = config['LAST_EPISODES_NUM']
 
@@ -114,7 +114,6 @@ def get_cart_location(screen_width):
     return int(env.state[0]*scale + screen_width/2.0)
 
 def get_screen():
-    env.reset()
     screen = env.render().transpose((2, 0, 1))
     _, screen_height, screen_width = screen.shape
     screen = screen[:, int(screen_height*0.4):int(screen_height*0.8)]
@@ -134,6 +133,7 @@ def get_screen():
     
     return resize(screen).unsqueeze(0).to(device)
 
+env.reset()
 init_screen = get_screen()
 _, _, screen_height, screen_width = init_screen.shape
 
@@ -234,7 +234,7 @@ for episode in range(NUM_EPISODES):
             for i in range(LAST_EPISODES_NUM):
                 mean += mean_last[i]
             mean = mean / LAST_EPISODES_NUM
-            if mean < TRANING_STOP and stop_training == False:
+            if mean < TRAINING_STOP and stop_training == False:
                 optimize_model()
             else:
                 stop_training = 1
